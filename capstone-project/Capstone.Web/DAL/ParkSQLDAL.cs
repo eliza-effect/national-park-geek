@@ -12,6 +12,7 @@ namespace Capstone.Web.DAL
     {
         private string connectionString;
         private const string SQL_GetAllParks = "Select * from park;";
+        private const string SQL_GetPark = "SELECT * FROM park WHERE parkCode = @parkCode;";
 
         public ParkSQLDAL(string connectionString)
         {
@@ -40,9 +41,15 @@ namespace Capstone.Web.DAL
             }
         }
 
-        public Park GetPark(string parkID)
+        public Park GetPark(string parkCode)
         {
             Park p = new Park();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                p = conn.QueryFirstOrDefault<Park>(SQL_GetPark, new { @parkCode = parkCode });
+            }
             return p;
         }
 

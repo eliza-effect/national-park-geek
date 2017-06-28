@@ -128,7 +128,7 @@
     <Content Include="Content\Images\parks\ynp2.jpg" />
     <Content Include="Content\Images\scenery.png" />
     <Content Include="Content\Images\weather\cloudy.png" />
-    <Content Include="Content\Images\weather\partlyCloudy.png" />
+    <Content Include="Content\Images\weather\partlycloudy.png" />
     <Content Include="Content\Images\weather\rain.png" />
     <Content Include="Content\Images\weather\snow.png" />
     <Content Include="Content\Images\weather\sunny.png" />
@@ -164,8 +164,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DetailViewModel.cs" />
     <Compile Include="Models\Park.cs" />
-    <Compile Include="Models\Survey_Result.cs" />
+    <Compile Include="Models\Survey.cs" />
     <Compile Include="Models\Weather.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -175,6 +176,10 @@
     <Content Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Home\Detail.cshtml" />
+    <Content Include="Views\Home\Survey.cshtml" />
+    <Content Include="Views\Home\FavoriteParks.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

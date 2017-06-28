@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "FavoriteParks";
+}
+
+<h2>FavoriteParks</h2>
+
+@if (TempData["StatusMessage"] != null)
+{
+    string message = TempData["StatusMessage"] as string;
+
+    <div class="alert alert-success alert-dismissable fade in">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>@message</strong>
+    </div>
+}
+
+
+

@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Capstone.Web.Models;
 
 namespace Capstone.Web.DAL
 {
-    interface ISurveyDAL
+    public interface ISurveyDAL
     {
+        List<Survey> AllSurveys();
+        void SaveSurvey(Survey s);
     }
 }

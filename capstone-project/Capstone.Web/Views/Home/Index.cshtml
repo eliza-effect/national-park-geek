@@ -19,7 +19,7 @@
 
         <div class="container-fluid">
 
-            <a href="@Url.Action("Detail", "Home", new { id = p.ParkCode})">
+            <a href="@Url.Action("Detail", "Home", new { parkCode = p.ParkCode})">
                 <img id ="parkimage" src="@Url.Content("~/Content/Images/parks/" + p.ParkCode.ToLower() + ".jpg")" alt="@p.ParkCode" />
             </a>
             <h3 id="name">@p.ParkName</h3>

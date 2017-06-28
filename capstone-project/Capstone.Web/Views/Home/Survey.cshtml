@@ -1,0 +1,22 @@
+﻿@using Capstone.Web.Models;
+@model Survey
+
+
+@{
+    ViewBag.Title = "Survey";
+}
+
+<h2>Survey</h2>
+
+@using (Html.BeginForm("Survey", "Home", FormMethod.Post))
+{
+    <div class="form-group">
+       <p>Please vote for your favorite park:</p>
+        @Html.DropDownListFor(m => m.ParkCode, Model.Parks, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m=>m.EmailAddress)
+        @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control", placeholder = "eliza@eliza.com" })
+    </div>
+}

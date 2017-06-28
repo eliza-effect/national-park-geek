@@ -1,0 +1,54 @@
+﻿@using Capstone.Web.Models;
+@model DetailViewModel
+
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Park.ParkName</h2>
+<h3>@Model.Park.State</h3>
+
+<section>
+
+    <div>
+        <img id="detailImage" src="@Url.Content("~/Content/Images/parks/" + Model.Park.ParkCode.ToLower() + ".jpg")" alt="@Model.Park.ParkCode"/>
+    </div>
+
+    <p>Acreage: @Model.Park.Acreage</p>
+
+    <p>Elevation: @Model.Park.ElevationInFeet feet</p>
+
+    <p>Miles of Trail: @Model.Park.MilesOfTrail</p>
+
+    <p>Number of Campsites: @Model.Park.NumberOfCampsites</p>
+
+    <p>Climate: @Model.Park.Climate</p>
+
+    <p>Year Founded: @Model.Park.YearFounded</p>
+
+    <p>Annual Visitors: @Model.Park.AnnualVisitorCount</p>
+
+    <p>@Model.Park.InspirationalQuote</p>
+
+    <p>-- @Model.Park.InspirationalQuoteSource</p>
+
+    <p>@Model.Park.ParkDescription</p>
+
+    <p>Entry Fee: @Model.Park.EntryFee.ToString("C")</p>
+
+    <p>Animal Species: @Model.Park.NumberOfAnimalSpecies</p>
+
+    @foreach(Weather w in Model.FiveDaysOfWeather)
+    {
+        <img id="weatherImage" src=@Url.Content("~/Content/Images/weather/" + w.Forecast.Replace(" ",string.Empty) + ".png") alt="@w.Forecast"/>
+        <p>High: @w.High  F</p>
+        <p>Low: @w.Low  F</p>
+    }
+
+
+
+
+
+</section>
