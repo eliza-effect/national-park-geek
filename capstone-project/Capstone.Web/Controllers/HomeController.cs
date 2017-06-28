@@ -39,6 +39,7 @@ namespace Capstone.Web.Controllers
 
         public ActionResult Survey()
         {
+            
             Survey s = new Survey();
             s.Parks = ConvertListToSelectList(parkDAL.GetAllParks());
             return View("Survey", s);
@@ -72,6 +73,7 @@ namespace Capstone.Web.Controllers
 
             return dropdownlist;
         }
+        
     }
 
 }

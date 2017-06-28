@@ -19,4 +19,16 @@
         @Html.LabelFor(m=>m.EmailAddress)
         @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control", placeholder = "eliza@eliza.com" })
     </div>
+
+    <div class="form-group">
+        <p>Please choose your activity level:</p>
+        @Html.DropDownListFor(m => m.ActivityLevel, Model.AcceptableActivityLevels, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <p>Please choose your state of residence:</p>
+        @Html.DropDownListFor(m => m.State, Model.States, new { @class = "form-control" })
+    </div>
+
+    <button>Submit</button>
 }
