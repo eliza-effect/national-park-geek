@@ -17,13 +17,13 @@
     @foreach (Park p in Model)
     {
 
-        <div>
+        <div class="container-fluid">
 
             <a href="@Url.Action("Detail", "Home", new { id = p.ParkCode})">
-                <img src="@Url.Content("~/Content/Images/parks/" + p.ParkCode.ToLower() + ".jpg")" alt="@p.ParkCode" />
+                <img id ="parkimage" src="@Url.Content("~/Content/Images/parks/" + p.ParkCode.ToLower() + ".jpg")" alt="@p.ParkCode" />
             </a>
-            <p>@p.ParkName</p>
-            <p>@p.ParkDescription</p>
+            <h3 id="name">@p.ParkName</h3>
+            <p id="description">@p.ParkDescription</p>
 
         </div>
 
