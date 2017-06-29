@@ -12,7 +12,7 @@
 {
     <div class="form-group">
        <p>Please vote for your favorite park:</p>
-        @Html.DropDownListFor(m => m.ParkCode, Model.Parks, new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.ParkCode, new SelectList(Model.Parks, "Value", "Text"), new { @class = "form-control" })
     </div>
 
     <div class="form-group">

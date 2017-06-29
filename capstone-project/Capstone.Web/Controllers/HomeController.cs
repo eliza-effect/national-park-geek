@@ -14,10 +14,11 @@ namespace Capstone.Web.Controllers
         private IWeatherDAL weatherDAL;
         private ISurveyDAL surveyDAL;
 
-        public HomeController(IParkDAL parkDAL, IWeatherDAL weatherDAL)
+        public HomeController(IParkDAL parkDAL, IWeatherDAL weatherDAL, ISurveyDAL surveyDAL)
         {
             this.parkDAL = parkDAL;
             this.weatherDAL = weatherDAL;
+            this.surveyDAL = surveyDAL;
         }
         // GET: Home
         public ActionResult Index()
@@ -41,13 +42,21 @@ namespace Capstone.Web.Controllers
         {
             
             Survey s = new Survey();
-            s.Parks = ConvertListToSelectList(parkDAL.GetAllParks());
+            List<Park> parks = parkDAL.GetAllParks();
+            s.Parks = ConvertListToSelectList(parks);
             return View("Survey", s);
+
+
         }
 
         [HttpPost]
         public ActionResult Survey(Survey s)
         {
+
+            if (!ModelState.IsValid)
+            {
+                return View ("Survey", s);
+            }
             surveyDAL.SaveSurvey(s);
 
             TempData["StatusMessage"] = "Success! Your survey has been submitted!";
@@ -57,7 +66,23 @@ namespace Capstone.Web.Controllers
 
         public ActionResult FavoriteParks()
         {
-            return View("FavoriteParks");
+            Dictionary<Park, int> parkVotes = new Dictionary<Park, int>();
+
+            List<Park> parks = parkDAL.GetAllParks();
+            
+            foreach(Park p in parks)
+            {
+                int vote = surveyDAL.GetVotes(p.ParkCode);
+
+                if(vote > 0)
+                {
+                    parkVotes.Add(p, vote);
+
+                }
+            }
+            
+
+            return View("FavoriteParks", parkVotes);
         }
 
 

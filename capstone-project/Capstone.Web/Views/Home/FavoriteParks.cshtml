@@ -1,4 +1,7 @@
-﻿
+﻿@using Capstone.Web.Models;
+@model Dictionary<Park, int>
+
+
 @{
     ViewBag.Title = "FavoriteParks";
 }
@@ -13,7 +16,44 @@
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <strong>@message</strong>
     </div>
+
 }
+
+@{List<int> votes = new List<int>();
+
+    votes = Model.Values.ToList();
+    votes.Sort();
+    votes.Reverse();
+
+    Dictionary<Park, int> sortedParks = new Dictionary<Park, int>();
+ }
+
+@while(Model.Count > 0)
+{
+    Park park = Model.FirstOrDefault(v => v.Value == votes.First()).Key;
+
+    sortedParks.Add(park, votes.First());
+
+    Model.Remove(park);
+    votes.Remove(votes.First());
+}
+
+@foreach (KeyValuePair<Park, int> kvp in sortedParks)
+{
+    <div class="container-fluid">
+
+        <a href="@Url.Action("Detail", "Home", new { parkCode = kvp.Key.ParkCode})">
+            <img id="parkimage" src="@Url.Content("~/Content/Images/parks/" + kvp.Key.ParkCode.ToLower() + ".jpg")" alt="@kvp.Key.ParkName" />
+        </a>
+        <h3 id="name">@kvp.Key.ParkName</h3>
+        <p id="description">@kvp.Key.ParkDescription</p>
+        <p id="votes">Number of Votes: @kvp.Value</p>
+
+    </div>
+
+}
+
+
 
 
 
