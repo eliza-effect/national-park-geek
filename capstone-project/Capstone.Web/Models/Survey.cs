@@ -9,7 +9,6 @@ namespace Capstone.Web.Models
 {
     public class Survey
     {
-
         public int SurveyId { get; set; }
 
         [Required(ErrorMessage = "*")]
@@ -27,9 +26,10 @@ namespace Capstone.Web.Models
         [Required(ErrorMessage = "*")]
         public string ActivityLevel { get; set; }
 
-        //this is to create the dropdown list of parks in the survey view
+        //dropdown list of parks in the survey view
         public List<SelectListItem> Parks { get; set; }
 
+        //dropdown for activity level in survey view
         public List<SelectListItem> AcceptableActivityLevels = new List<SelectListItem>()
         {
             new SelectListItem() {Text = "Inactive", Value = "Inactive" },
@@ -38,6 +38,7 @@ namespace Capstone.Web.Models
             new SelectListItem() {Text = "Extremely Active", Value = "Extremely Active" }
         };
 
+        //dropdown for state in survey view
         public List<SelectListItem> States = new List<SelectListItem>()
         {
         new SelectListItem() {Text="Alabama", Value="AL"},

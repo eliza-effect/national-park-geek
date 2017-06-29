@@ -8,27 +8,41 @@
 
 <h2>Survey</h2>
 
+@if (TempData["Incomplete"] != null)
+{
+    string message = TempData["Incomplete"] as string;
+
+    <div class="alert alert-success alert-dismissable fade in">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>@message</strong>
+    </div>
+}
+
 @using (Html.BeginForm("Survey", "Home", FormMethod.Post))
 {
     <div class="form-group">
-       <p>Please vote for your favorite park:</p>
-        @Html.DropDownListFor(m => m.ParkCode, new SelectList(Model.Parks, "Value", "Text"), new { @class = "form-control" })
+        @Html.LabelFor(m=>m.ParkCode, "Please select your park:")
+        @Html.DropDownListFor(m => m.ParkCode, new SelectList(Model.Parks, "Value", "Text"), new { @class = "form-control", placeholder = "Select" })
+        @Html.ValidationMessageFor(m=>m.ParkCode)
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m=>m.EmailAddress)
+        @Html.LabelFor(m=>m.EmailAddress, "Please enter your email address:")
         @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control", placeholder = "eliza@eliza.com" })
+        @Html.ValidationMessageFor(m => m.EmailAddress)
     </div>
 
     <div class="form-group">
-        <p>Please choose your activity level:</p>
+        @Html.LabelFor(m => m.ActivityLevel, "Please select your activity level:")
         @Html.DropDownListFor(m => m.ActivityLevel, Model.AcceptableActivityLevels, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ActivityLevel)
     </div>
 
     <div class="form-group">
-        <p>Please choose your state of residence:</p>
+        @Html.LabelFor(m => m.State, "Please select your state of residence:")
         @Html.DropDownListFor(m => m.State, Model.States, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.State)
     </div>
 
-    <button>Submit</button>
+    <button class="submit">Submit</button>
 }

@@ -5,6 +5,7 @@
 @{
     ViewBag.Title = "Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string c;
 }
 
 <h2>@Model.Park.ParkName</h2>
@@ -40,15 +41,40 @@
 
     <p>Animal Species: @Model.Park.NumberOfAnimalSpecies</p>
 
+    
+
+    @if (Model.IsFahrenheit)
+    {
+        c = "°F";
+    }
+    else
+    {
+        c = "°C";
+    }
+
+    <p>Today's Weather Alert!</p>
+
+    <p>@Model.Recommendation(Model.FiveDaysOfWeather.First().Forecast, Model.FiveDaysOfWeather.First().High, Model.FiveDaysOfWeather.First().Low)</p>
+
     @foreach(Weather w in Model.FiveDaysOfWeather)
     {
         <img id="weatherImage" src=@Url.Content("~/Content/Images/weather/" + w.Forecast.Replace(" ",string.Empty) + ".png") alt="@w.Forecast"/>
-        <p>High: @w.High  F</p>
-        <p>Low: @w.Low  F</p>
+        <p>High: @Model.ConvertTemp(Model.IsFahrenheit, w.High) @c</p>
+        <p>Low: @Model.ConvertTemp(Model.IsFahrenheit, w.Low) @c</p>
     }
 
+    @using (Html.BeginForm("Detail", "Home", FormMethod.Post))
+    {
+        <p>Toggle Fahrenheit or Celsius</p>
+        <input type="hidden" name="parkCode" value="@Model.Park.ParkCode" />
 
+        <p>Fahrenheit</p>
+        <p>@Html.RadioButtonFor(m => m.IsFahrenheit, true)</p>
 
+        <p>Celsius</p>
+        <p>@Html.RadioButtonFor(m => m.IsFahrenheit, false)</p>
 
+        <button>Switch!</button>
+    }
 
 </section>

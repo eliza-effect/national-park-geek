@@ -21,49 +21,68 @@ namespace Capstone.Web.Controllers
             this.surveyDAL = surveyDAL;
         }
         // GET: Home
+        [HttpGet]
         public ActionResult Index()
         {
             List<Park> parks = parkDAL.GetAllParks();
             return View("Index", parks);
         }
 
+        [HttpGet]
         public ActionResult Detail(string parkCode)
         {
             DetailViewModel p = new DetailViewModel()
             {
                 Park = parkDAL.GetPark(parkCode),
-                FiveDaysOfWeather = weatherDAL.GetForecast(parkCode)
+                FiveDaysOfWeather = weatherDAL.GetForecast(parkCode),
+                IsFahrenheit = true
             };
             return View("Detail", p);
         }
 
+        [HttpPost]
+        public ActionResult Detail(string parkCode, bool isFahrenheit)
+        {
+            DetailViewModel newModel = new DetailViewModel();
+            newModel.IsFahrenheit = isFahrenheit;
+            newModel.Park = parkDAL.GetPark(parkCode);
+            newModel.FiveDaysOfWeather = weatherDAL.GetForecast(parkCode);
 
+            return View("Detail", newModel);
+        }
+
+        [HttpGet]
         public ActionResult Survey()
         {
-            
-            Survey s = new Survey();
             List<Park> parks = parkDAL.GetAllParks();
-            s.Parks = ConvertListToSelectList(parks);
+            Survey s = new Survey()
+            {
+                Parks = ConvertListToSelectList(parks)
+            };
+
             return View("Survey", s);
-
-
         }
 
         [HttpPost]
-        public ActionResult Survey(Survey s)
+        public ActionResult Survey(Survey survey)
         {
+            List<Park> parks = parkDAL.GetAllParks();
+            survey.Parks = ConvertListToSelectList(parks);
 
             if (!ModelState.IsValid)
             {
-                return View ("Survey", s);
+                TempData["Incomplete"] = "Some required fields were not entered correctly. Please fix the fields marked with *.";
+                return View ("Survey", survey);
             }
-            surveyDAL.SaveSurvey(s);
+
+            surveyDAL.SaveSurvey(survey);
 
             TempData["StatusMessage"] = "Success! Your survey has been submitted!";
 
             return RedirectToAction("FavoriteParks");
         }
 
+        [HttpGet]
         public ActionResult FavoriteParks()
         {
             Dictionary<Park, int> parkVotes = new Dictionary<Park, int>();
@@ -77,14 +96,14 @@ namespace Capstone.Web.Controllers
                 if(vote > 0)
                 {
                     parkVotes.Add(p, vote);
-
                 }
             }
-            
 
             return View("FavoriteParks", parkVotes);
         }
 
+
+        // private helper methods
 
         private List<SelectListItem> ConvertListToSelectList(List<Park> ParksList)
         {
@@ -98,7 +117,5 @@ namespace Capstone.Web.Controllers
 
             return dropdownlist;
         }
-        
     }
-
 }
