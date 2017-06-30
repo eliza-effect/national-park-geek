@@ -1,5 +1,9 @@
-﻿body {
-    padding-top: 50px;
+﻿html {
+    width: 100%;
+}
+
+body {
+    padding-top: 5px;
     padding-bottom: 20px;
 }
 
@@ -45,8 +49,10 @@ textarea {
         content: '4 .col-md-3';
     }
 }
-.nav navbar-nav{
-    margin: 2em;
+
+.nav navbar-nav {
+    margin: 3em;
+    width: 100%;
 }
 
 #description {
@@ -54,20 +60,104 @@ textarea {
     margin: 4em;
 }
 
-#name{
+#name {
     font-size: 2em;
     margin: 2em;
 }
-#img{
-    width: 10%;
-    
+
+#img {
+    width: 60%;
 }
-#heading{
-    font-family:'Comic Sans MS';
+
+#heading {
+    font-family: 'Comic Sans MS';
     font-size: 100em;
+    position: relative;
+    left: .03em;
+}
+
+#parkimage {
+    float: left;
+    margin: 3em;
+}
+
+.row {
+    background-color: forestgreen;
+    padding: 1em;
+    width: auto;
+}
+
+#surveydescription {
+    padding: 1.5em;
+}
+
+.form-group {
+    padding: 2em;
+}
+
+    .form-group label {
+        width: 20em;
+        display: inline-block;
+        /*vertical-align: top;*/
+        /*padding-left: 2em;
+        padding-top: 2em;*/
+        /*padding-bottom: 2em;*/
+    }
+    .form-control{
+        display: inline;
+    }
+    input{
+        display:inline-block;
+        width: 300px;
+        margin: 0;
+        /*text-align:start;*/
+    }
+
+#img2{
+    width: 50em;
+    float:right;
+    right: 10em;
+    opacity: .2;
     
 }
-#parkimage{
-    float:left;
-    margin: 3em;
+.surveybody {
+    /*background-image: url('Images/scenery.png');*/
+    background: linear-gradient(rgba(255, 255, 255, .89), rgba(255, 255, 255, .8)), url('Images/scenery.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+form button{
+    text-align: center;
+    margin-left: 20em;
+}
+
+#state{
+    font-size: .75em;
+    margin-left: 1em;
+}
+#day{
+    
+    display: inline-block;
+    padding: -1em;
+}
+#weatherImage{
+    width: 30%;
+}
+
+#detailImage{
+    float: left;
+    margin: 2em;
+}
+.stats1{
+    display: inline-block;
+    max-width: 60%
+}
+.weathercontainer{
+    min-height: 100%;
+    max-width: 35%;
+    display:inline-block;
+    position: relative;
+    left: 30em;
+    float: right;
 }

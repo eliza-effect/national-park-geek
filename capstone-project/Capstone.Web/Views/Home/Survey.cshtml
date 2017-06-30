@@ -6,7 +6,12 @@
     ViewBag.Title = "Survey";
 }
 
-<h2>Survey</h2>
+<h2>Vote For Your Favorite Park!</h2>
+
+<div id="surveydescription">
+    <p>We always enjoy hearing from our park visitors. Please select your favorite park from the dropdown menu and tell us a little about yourself! Your favorite park's funding depends
+    on you letting us know that you like it!!!</p>
+</div>
 
 @if (TempData["Incomplete"] != null)
 {
@@ -17,32 +22,36 @@
         <strong>@message</strong>
     </div>
 }
+<div class="surveybody">
+    @using (Html.BeginForm("Survey", "Home", FormMethod.Post))
+    {
 
-@using (Html.BeginForm("Survey", "Home", FormMethod.Post))
-{
-    <div class="form-group">
-        @Html.LabelFor(m=>m.ParkCode, "Please select your park:")
-        @Html.DropDownListFor(m => m.ParkCode, new SelectList(Model.Parks, "Value", "Text"), new { @class = "form-control", placeholder = "Select" })
-        @Html.ValidationMessageFor(m=>m.ParkCode)
-    </div>
+        <div class="form-group">
 
-    <div class="form-group">
-        @Html.LabelFor(m=>m.EmailAddress, "Please enter your email address:")
-        @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control", placeholder = "eliza@eliza.com" })
-        @Html.ValidationMessageFor(m => m.EmailAddress)
-    </div>
+            @Html.LabelFor(m => m.ParkCode, "Please select your park:")
+            @Html.DropDownListFor(m => m.ParkCode, new SelectList(Model.Parks, "Value", "Text"), new { @class = "form-control", placeholder = "Select" })
+            @Html.ValidationMessageFor(m => m.ParkCode)
+        </div>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.ActivityLevel, "Please select your activity level:")
-        @Html.DropDownListFor(m => m.ActivityLevel, Model.AcceptableActivityLevels, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.ActivityLevel)
-    </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.EmailAddress, "Please enter your email address:")
+            @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control", placeholder = "eliza@eliza.com" })
+            @Html.ValidationMessageFor(m => m.EmailAddress)
+        </div>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.State, "Please select your state of residence:")
-        @Html.DropDownListFor(m => m.State, Model.States, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.State)
-    </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.ActivityLevel, "Please select your activity level:")
+            @Html.DropDownListFor(m => m.ActivityLevel, Model.AcceptableActivityLevels, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.ActivityLevel)
+        </div>
 
-    <button class="submit">Submit</button>
-}
+        <div class="form-group">
+            @Html.LabelFor(m => m.State, "Please select your state of residence:")
+            @Html.DropDownListFor(m => m.State, Model.States, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.State)
+
+        </div>
+
+        <button class="submit">Submit</button>
+    }
+</div>
