@@ -22,9 +22,11 @@
             <a href="@Url.Action("Detail", "Home", new { parkCode = p.ParkCode})">
                 <img id ="parkimage" src="@Url.Content("~/Content/Images/parks/" + p.ParkCode.ToLower() + ".jpg")" alt="@p.ParkCode" />
             </a>
-            <h3 id="name">@p.ParkName</h3>
-            <p id="description">@p.ParkDescription</p>
 
+            <div class="desc">
+                <h3 id="name">@p.ParkName</h3>
+                <p id="description">@p.ParkDescription</p>
+            </div>
         </div>
 
     }

@@ -8,79 +8,98 @@
     string c;
 }
 
-<h2>@Model.Park.ParkName <span id="state">@Model.Park.State</span></h2>
-<h3></h3>
+<h4 class="inspiration">"@Model.Park.InspirationalQuote" -- @Model.Park.InspirationalQuoteSource</h4>
 
-<section class="section">
+<div>
+    <img id="detailImage" src="@Url.Content("~/Content/Images/parks/" + Model.Park.ParkCode.ToLower() + ".jpg")" alt="@Model.Park.ParkName" />
+</div>
 
-    <div>
-        <img id="detailImage" src="@Url.Content("~/Content/Images/parks/" + Model.Park.ParkCode.ToLower() + ".jpg")" alt="@Model.Park.ParkName"/>
-    </div>
-    <p>@Model.Park.ParkDescription</p>
+<section class="subhed">
+    <h2>@Model.Park.ParkName <span id="state">@Model.Park.State</span></h2>
 
-    <p>@Model.Park.InspirationalQuote</p>
-
-    <p>-- @Model.Park.InspirationalQuoteSource</p>
+    <h4>@Model.Park.ParkDescription</h4>
 
 </section>
 
-<section class="stats1">
-    <p>Acreage: @Model.Park.Acreage</p>
+@*set temperature scale*@
 
-    <p>Elevation: @Model.Park.ElevationInFeet feet</p>
-
-    <p>Miles of Trail: @Model.Park.MilesOfTrail</p>
-
-    <p>Number of Campsites: @Model.Park.NumberOfCampsites</p>
-
-    <p>Climate: @Model.Park.Climate</p>
-
-    <p>Year Founded: @Model.Park.YearFounded</p>
-
-    <p>Annual Visitors: @Model.Park.AnnualVisitorCount</p>
+@if (Model.IsFahrenheit)
+{
+    c = "°F";
+}
+else
+{
+    c = "°C";
+}
 
 
-    <p>Entry Fee: @Model.Park.EntryFee.ToString("C")</p>
 
-    <p>Animal Species: @Model.Park.NumberOfAnimalSpecies</p>
+    <div class="weatherchunk">
+        <h4>5-day Forecast:</h4>
+            @for (int i = 1; i < Model.FiveDaysOfWeather.Count; i++)
+            {
+                <img class="img-fluid" id="weatherImage" src=@Url.Content("~/Content/Images/weather/" + Model.FiveDaysOfWeather[i].Forecast.Replace(" ",string.Empty) + ".png") alt="@Model.FiveDaysOfWeather[i].Forecast" />
+                <p><b>High:</b> @Model.ConvertTemp(Model.IsFahrenheit, Model.FiveDaysOfWeather[i].High) @c</p>
+                <p><b>Low:</b> @Model.ConvertTemp(Model.IsFahrenheit, Model.FiveDaysOfWeather[i].Low) @c</p>
+            }
 
-    @*set temperature scale*@
+    </div>
 
-    @if (Model.IsFahrenheit)
-    {
-        c = "°F";
-    }
-    else
-    {
-        c = "°C";
-    }
-    <div class="weathercontainer">
 
-        <p>Today's Weather Alert!</p>
+
+<div class="todaysweather">
+    <h3>Today's Weather: </h3>
+    <img id="todaysweather" src=" @Url.Content("~/Content/Images/weather/" + Model.FiveDaysOfWeather[0].Forecast.Replace(" ",string.Empty) + ".png")" alt="@Model.FiveDaysOfWeather[0].Forecast" />
+    <p><b>High:</b> @Model.ConvertTemp(Model.IsFahrenheit, Model.FiveDaysOfWeather[0].High) @c</p>
+    <p><b>Low:</b> @Model.ConvertTemp(Model.IsFahrenheit, Model.FiveDaysOfWeather[0].Low) @c</p>
+
+
+    <div class="weatheralert">
+        <h3>Weather Alert!</h3>
 
         <p>@Model.Recommendation(Model.FiveDaysOfWeather.First().Forecast, Model.FiveDaysOfWeather.First().High, Model.FiveDaysOfWeather.First().Low)</p>
+    </div>
+</div>
 
-        @foreach (Weather w in Model.FiveDaysOfWeather)
-        {
-            <div id="day">
-                <img id="weatherImage" src=@Url.Content("~/Content/Images/weather/" + w.Forecast.Replace(" ",string.Empty) + ".png") alt="@w.Forecast" />
-                <p>High: @Model.ConvertTemp(Model.IsFahrenheit, w.High) @c</p>
-                <p>Low: @Model.ConvertTemp(Model.IsFahrenheit, w.Low) @c</p>
-            </div>
-        }
 
+
+<section class="stats1">
+
+    <p><b>Acreage:</b> @Model.Park.Acreage</p>
+
+    <p><b>Elevation:</b> @Model.Park.ElevationInFeet feet</p>
+
+    <p><b>Miles of Trail:</b> @Model.Park.MilesOfTrail</p>
+
+    <p><b>Number of Campsites:</b> @Model.Park.NumberOfCampsites</p>
+
+    <p><b>Climate:</b> @Model.Park.Climate</p>
+
+    <p><b>Founded:</b>  @Model.Park.YearFounded</p>
+
+    <p><b>Annual Visitors:</b> @Model.Park.AnnualVisitorCount</p>
+
+    <p><b>Entry Fee:</b> @Model.Park.EntryFee.ToString("C")</p>
+
+    <p><b>Animal Species:</b> @Model.Park.NumberOfAnimalSpecies</p>
+
+
+
+    <div class="toggle">
         @using (Html.BeginForm("Detail", "Home", FormMethod.Post))
-        {
-            <p>Toggle Fahrenheit or Celsius</p>
+            {
+            <p>Fahrenheit or Celsius:</p>
             <input type="hidden" name="parkCode" value="@Model.Park.ParkCode" />
 
-            <p>Fahrenheit</p>
-            <p>@Html.RadioButtonFor(m => m.IsFahrenheit, true)</p>
+            <span>@Html.LabelFor(m => m.IsFahrenheit, "F")</span> <span id="radiotoggle">@Html.RadioButtonFor(m => m.IsFahrenheit, true)</span>
 
-            <p>Celsius</p>
-            <p>@Html.RadioButtonFor(m => m.IsFahrenheit, false)</p>
 
-            <button>Switch!</button>
+            <span>@Html.LabelFor(m => m.IsFahrenheit, "C")</span> <span id="radiotoggle">@Html.RadioButtonFor(m => m.IsFahrenheit, false)</span>
+
+
+            <button id="togglebutton">Switch!</button>
         }
     </div>
 </section>
+
+
